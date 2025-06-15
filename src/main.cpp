@@ -14,8 +14,8 @@ int main() {
     // Compute the occupancy bitboards
     board.recompute_occupancy();
 
-    // Generate pseudo-legal moves for white
-    MoveList whiteMoves = generate_pseudo_legal_moves(board, WHITE);
+    // Generate legal moves for white (20 moves)
+    MoveList whiteMoves = generate_legal_moves(board, WHITE);
     std::cout << "White Pseudo-Legal Moves: " << whiteMoves.size() << std::endl;
     for (const auto &move : whiteMoves) {
         std::cout << "From: " << move.from << ", To: " << move.to 
@@ -24,7 +24,7 @@ int main() {
                   << ", Double Push: " << move.is_double_push << std::endl;
     }
     
-    // Generate pseudo-legal moves for knight in middle of the board
+    // Generate legal moves for knight in middle of the board (8 moves)
     Board board2; 
     for (auto &bb : board2.bitboards) {
         bb = 0ULL; // Clear all bitboards
@@ -36,7 +36,7 @@ int main() {
     set_bit(board2.bitboards[board_index(WHITE, KNIGHT)], sq); // Place a knight on d4
     board2.recompute_occupancy();
 
-    MoveList knightMoves = generate_pseudo_legal_moves(board2, WHITE);
+    MoveList knightMoves = generate_legal_moves(board2, WHITE);
     std::cout << "Knight Pseudo-Legal Moves: " << knightMoves.size() << std::endl;
     for (const auto &move : knightMoves) {
         std::cout << "From: " << move.from << ", To: " << move.to

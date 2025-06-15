@@ -16,4 +16,5 @@ The move struct contains 5 vital pieces of information for defining a `Move` in 
 5. `is_double_push`: True for pawn two-step move 
 
 ### Functions
-- `generate_pseudo_legal_moves`: Generate all the pseudo-legal moves from a particular game state.
+- `generate_pseudo_legal_moves`: Generate all the legal moves from a particular game state.
+- `generate_legal_moves`: Remove the illegal moves from the pseudo-legal moves generation (i.e. ones that put the king in check) by making the move, checking if the king square then becomes under attack (the move gets removed if it does) then undoes the move. 

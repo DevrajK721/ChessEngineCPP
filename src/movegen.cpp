@@ -1,4 +1,5 @@
 #include "movegen.hpp"
+#include "board.hpp"
 #include <cstdint>
 
 // Masks for double pawn pushes 
@@ -137,4 +138,20 @@ MoveList generate_pseudo_legal_moves(const Board &b, Color side) {
         }
     }
     return moves; // Return the list of generated pseudo-legal moves
+}
+
+MoveList generate_legal_moves(const Board &b, Color side) {
+    MoveList pseudoLegalMoves = generate_pseudo_legal_moves(b, side);
+    MoveList legalMoves;
+
+    U64 tmpKing = b.bitboards[board_index(side, KING)];
+    int kingSquare = pop_lsb(tmpKing); // Get KING's position 
+
+    // Loop through all the pseudo-legal moves and make the move to see if it puts the King Square under attack
+    for (auto &move: pseudoLegalMoves) {
+        b.make_move(move);
+        b.recompute_occupancy(); // Recompute occupancy after the move
+        // TODO!!!
+
+    }
 }
