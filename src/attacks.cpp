@@ -91,9 +91,3 @@ U64 bishop_attacks(int sq, U64 occ) {
 
     return slding_attacks(sq, occ, bishopDirections, 4);
 }
-
-U64 queen_attacks(int sq, U64 occ) {
-    // Queen attacks are a combination of rook and bishop attacks
-    return rook_attacks(sq, occ) | bishop_attacks(sq, occ);
-}
-

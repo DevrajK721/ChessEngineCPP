@@ -8,6 +8,10 @@ extern U64 knightAttacks[64]; // Knight attacks for each square
 extern U64 kingAttacks[64]; // King attacks for each square
 extern U64 pawnAttacks[2][64]; // Pawn attacks for white and black (0 for white, 1 for black)
 
+// Pawn Attacks
+void init_pawn_attacks(); // Initialize pawn attacks for both colors
+void init_leaper_attacks(); // Initialize knight and king attacks
+
 // Sliding Piece Attacks
 U64 rook_attacks(int sq, U64 occ); // Rook attacks for a given square with occupancy
 U64 bishop_attacks(int sq, U64 occ); // Bishop attacks for a given square with occupancy

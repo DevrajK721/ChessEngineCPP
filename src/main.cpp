@@ -1,36 +1,51 @@
-#include "board.hpp"
+#include "movegen.hpp"
 #include <iostream> 
 
 int main() {
+    init_leaper_attacks();
+    init_pawn_attacks();
+
     // Create a Board instance
     Board board; 
 
     // Initialize the board to the starting position
     board.init_startpos();
 
-    // Recompute the occupancy bitboards
+    // Compute the occupancy bitboards
     board.recompute_occupancy();
 
-    // Display the bitboards
-    for (size_t i = 0; i < board.bitboards.size(); ++i) {
-        std::cout << "Bitboard for piece type " << i << ":\n";
-        std::cout << "-----------------\n";
-        display_bitboard(board.bitboards[i]);
+    // Generate pseudo-legal moves for white
+    MoveList whiteMoves = generate_pseudo_legal_moves(board, WHITE);
+    std::cout << "White Pseudo-Legal Moves: " << whiteMoves.size() << std::endl;
+    for (const auto &move : whiteMoves) {
+        std::cout << "From: " << move.from << ", To: " << move.to 
+                  << ", Piece: " << move.piece 
+                  << ", Captured: " << move.captured 
+                  << ", Double Push: " << move.is_double_push << std::endl;
+    }
+    
+    // Generate pseudo-legal moves for knight in middle of the board
+    Board board2; 
+    for (auto &bb : board2.bitboards) {
+        bb = 0ULL; // Clear all bitboards
     }
 
-    // Display the occupancy bitboards
-    std::cout << "Both Occupancy:\n";
-    display_bitboard(board.bothOccupancy);
+    board2.recompute_occupancy();
 
-    std::cout << "White Occupancy:\n";
-    display_bitboard(board.whiteOccupancy);
+    int sq = sq_index('d', '4');
+    set_bit(board2.bitboards[board_index(WHITE, KNIGHT)], sq); // Place a knight on d4
+    board2.recompute_occupancy();
 
-    std::cout << "Black Occupancy:\n";
-    display_bitboard(board.blackOccupancy);
-    std::cout << "-----------------\n";
+    MoveList knightMoves = generate_pseudo_legal_moves(board2, WHITE);
+    std::cout << "Knight Pseudo-Legal Moves: " << knightMoves.size() << std::endl;
+    for (const auto &move : knightMoves) {
+        std::cout << "From: " << move.from << ", To: " << move.to
+                  << ", Piece: " << move.piece
+                  << ", Captured: " << move.captured
+                  << ", Double Push: " << move.is_double_push << std::endl;
+    }
 
-    std::cout << "Board initialized and occupancy recomputed successfully.\n";
-    
-    return 0;
+    return 0; 
+
 }
 
