@@ -1,4 +1,4 @@
-# Piece 
+# Board 
 Documentation for `board.cpp` & `board.hpp`. 
 
 ---
