@@ -21,6 +21,9 @@ cmake --build .
 
 ## Documentation 
 [Bitboard Notes](docs/bitboard.md)
+
 [Pieces Notes](docs/piece.md)
+
 [Board Notes](docs/board.md)
+
 [Attacks Notes](docs/attacks.md)
